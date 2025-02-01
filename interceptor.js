@@ -38,10 +38,9 @@ class FrontendServer {
         this.register('GET', path, handler);
     }
 
-    handleRequest(url) {
-        const method = 'GET';
+    handleRequest(url, method = 'GET', data = null) {
         if (this.routes[method] && this.routes[method][url]) {
-            return this.routes[method][url]();
+            return this.routes[method][url](data);
         } else {
             throw new Error('Route not found');
         }
@@ -54,14 +53,18 @@ frontendServer.get('/about', () => '<div>About Page Content</div>');
 frontendServer.get('/contact', () => '<div>Contact Page Content</div>');
 
 // Example of adding a POST route
-frontendServer.register('POST', '/submit', () => '<div>Form Submitted</div>');
+frontendServer.register('POST', '/submit', (data) => {
+    return `<div>Form Submitted with data: ${JSON.stringify(data)}</div>`;
+});
 
 htmx.defineExtension('interceptor', {
     onEvent: function (name, evt) {
         if (name === "htmx:beforeRequest") {
             evt.detail.path = async function (url, config) {
                 try {
-                    const htmlContent = frontendServer.handleRequest(url);
+                    const method = config.method || 'GET';
+                    const data = config.body ? JSON.parse(config.body) : null;
+                    const htmlContent = frontendServer.handleRequest(url, method, data);
                     evt.detail.xhr.responseText = htmlContent;
                     evt.detail.xhr.readyState = 4;
                     evt.detail.xhr.status = 200;
