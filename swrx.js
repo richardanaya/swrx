@@ -143,7 +143,7 @@ if (
     }
   }
 
-  function html(strings) {
+  function html(strings, ...values) {
     let builtHtml = strings[0];
     for (let i = 0; i < values.length; i++) {
       builtHtml += String(values[i]) + strings[i + 1];

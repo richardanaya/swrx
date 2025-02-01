@@ -38,7 +38,7 @@ Here's a simple example demonstrating how to define routes using SWRX:
     <title>Htmx Service Worker Router</title>
     <!-- Include HTMX 2.0 from a CDN -->
     <script src="https://unpkg.com/htmx.org@2.0.0/dist/htmx.js"></script>
-    <script src="https://unpkg.com/@richardanaya/swrx/swrx.js"></script>
+    <script src="https://unpkg.com/@richardanaya/swrx@0.0.7/swrx.js"></script>
   </head>
   <body>
    <h1>Submit Your Information</h1>
@@ -69,7 +69,7 @@ Here's a simple example demonstrating how to define routes using SWRX:
 
 
 ```javascript
-import "https://unpkg.com/@richardanaya/swrx/swrx.js";
+import "https://unpkg.com/@richardanaya/swrx@0.0.7/swrx.js";
 
 // Define a POST route with URL parameters
 post("/submit/[id]/[otherid]/*", async (request) => {
