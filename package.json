@@ -2,5 +2,7 @@
     "name": "@richardanaya/swrx",
     "version": "0.0.4",
     "license": "MIT",
-    "private": false
+    "publishConfig": {
+        "access": "public"
+    }
 }
