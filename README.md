@@ -9,6 +9,7 @@ SWRX is a lightweight service worker router designed to handle HTTP requests in 
 - **URL Parameter Parsing**: Easily extract parameters from URLs using a simple syntax.
 - **HTML Response Generation**: Create HTML responses directly within the service worker.
 - **Service Worker Integration**: Leverage the power of service workers to intercept and handle network requests.
+- **Simple Key-Value Storage**: Provides a simple key-value storage similar to localStorage for persisting data.
 
 ## What are Service Workers?
 
@@ -77,7 +78,26 @@ post("/submit/[id]/[otherid]/*", async (request) => {
 });
 ```
 
-## HTMX Integration
+## Simple Key-Value Storage Example
+
+SWRX provides a simple key-value storage mechanism similar to localStorage. Here's an example of how you can use it to maintain a counter:
+
+```javascript
+// Increment a counter stored in the service worker's storage
+post("/increment-counter", async (request) => {
+  let counter = await serviceStorage.getItem("counter");
+  if (!counter) {
+    counter = 0;
+  }
+  counter++;
+  await serviceStorage.setItem("counter", counter);
+
+  return new Response(`Counter is now: ${counter}`, {
+    status: 200,
+    headers: { "Content-Type": "text/plain" },
+  });
+});
+```
 
 SWRX can be seamlessly integrated with HTMX to enhance the interactivity of your web applications. HTMX allows you to use HTML attributes to perform AJAX requests, update parts of the page, and handle user interactions without writing JavaScript.
 
