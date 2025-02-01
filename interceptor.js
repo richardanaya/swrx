@@ -64,7 +64,7 @@ htmx.defineExtension('interceptor', {
             evt.detail.path = async function (url, config) {
                 try {
                     const method = config.method || 'GET';
-                    const data = config.body ? JSON.parse(config.body) : null;
+                    const data = config.body ? Object.fromEntries(new URLSearchParams(config.body)) : null;
                     const htmlContent = frontendServer.handleRequest(url, method, data);
                     evt.detail.xhr.responseText = htmlContent;
                     evt.detail.xhr.readyState = 4;
