@@ -21,8 +21,9 @@
 
   <!-- The target element where the HTML response will be injected -->
   <div id="result">Result will appear here.</div>
+  <div id="form-result">Form result will appear here.</div>
 
-  <form hx-post="/submit" hx-target="#result" hx-swap="innerHTML">
+  <form hx-post="/submit" hx-target="#form-result" hx-swap="innerHTML">
     <label for="name">Name:</label>
     <input type="text" id="name" name="name" required>
     <button type="submit">Submit</button>
