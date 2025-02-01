@@ -14,7 +14,17 @@ htmx.defineExtension('requestInterceptor', {
                 }, 1000); // Simulate network delay
                 return false; // Prevent the actual request
             }
+        },
+    isInlineSwap: function(swapStyle) {
+        return swapStyle === "innerHTML";
+    },
+    handleSwap: function(swapStyle, target, fragment, settleInfo) {
+        if (swapStyle === "innerHTML") {
+            target.innerHTML = fragment.firstElementChild.outerHTML;
+            return true;
         }
+        return false;
+    }
     }
 });
 
