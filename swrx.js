@@ -106,6 +106,66 @@ if (
 
   self.html = html;
 
+  class IDBStorage {
+    constructor() {
+      this.dbName = "ServiceWorkerRouterStorage";
+      this.storeName = "KeyValueStore";
+    }
+
+    getDB() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(this.dbName, 1);
+
+        request.onupgradeneeded = (event) => {
+          const db = event.target.result;
+          if (!db.objectStoreNames.contains(this.storeName)) {
+            db.createObjectStore(this.storeName);
+          }
+        };
+
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    async setItem(key, value) {
+      const db = await this.getDB();
+      return new Promise((resolve, reject) => {
+        const transaction = db.transaction(this.storeName, "readwrite");
+        const store = transaction.objectStore(this.storeName);
+        store.put(value, key);
+        transaction.oncomplete = () => resolve();
+        transaction.onerror = () => reject(transaction.error);
+      });
+    }
+
+    async getItem(key) {
+      const db = await this.getDB();
+      return new Promise((resolve, reject) => {
+        const transaction = db.transaction(this.storeName, "readonly");
+        const store = transaction.objectStore(this.storeName);
+        const request = store.get(key);
+
+        request.onsuccess = () => resolve(request.result ?? null);
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    async removeItem(key) {
+      const db = await this.getDB();
+      return new Promise((resolve, reject) => {
+        const transaction = db.transaction(this.storeName, "readwrite");
+        const store = transaction.objectStore(this.storeName);
+        store.delete(key);
+        transaction.oncomplete = () => resolve();
+        transaction.onerror = () => reject(transaction.error);
+      });
+    }
+  }
+
+  // Usage Example
+  self.serviceStorage = new IDBStorage();
+
   /**
    * Finds a matching route for an incoming request using regex.
    * If a route matches, any captured parameters are attached to the request

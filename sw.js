@@ -10,6 +10,12 @@ get("/pages/index", (request) => {
 });
 
 post("/submit/[id]/[otherid]/*", async (request) => {
+  let counter = await serviceStorage.getItem("counter");
+  if (!counter) {
+    await serviceStorage.setItem("counter", 1);
+    counter = 2;
+  }
+  await serviceStorage.setItem("counter", counter + 1);
   const { id, otherid, wildcard } = request.params;
   try {
     // Parse the form data from the request.
@@ -47,6 +53,7 @@ post("/submit/[id]/[otherid]/*", async (request) => {
           ${id} ${otherid} ${wildcard}
           <p>Name: ${name}</p>
           <p>Email: ${email}</p>
+          <p>Counter: ${counter}</p>
         </body>
       </html>
     `;
