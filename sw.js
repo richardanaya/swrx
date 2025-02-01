@@ -1,4 +1,4 @@
-import "./swrx.js";
+import "https://unpkg.com/@richardanaya/swrx/swrx.js";
 
 // Define your routes using an Express-like syntax.
 // Example: A GET route for '/foo' that returns "Hello world!".
