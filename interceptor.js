@@ -25,17 +25,15 @@ htmx.defineExtension('interceptor', {
     onEvent: function (name, evt) {
         if (name === "htmx:beforeRequest") {
             evt.detail.path = async function (url, config) {
-                // Intercept the request and return HTML content based on route
                 try {
                     const htmlContent = frontendServer.handleRequest(url);
                     evt.detail.xhr.responseText = htmlContent;
-                    evt.detail.xhr.readyState = 4; // Set readyState to DONE
-                    evt.detail.xhr.status = 200; // Set status
-                    evt.detail.xhr.statusText = 'OK'; // Set statusText
-                    evt.detail.xhr.dispatchEvent(new Event('readystatechange')); // Dispatch readystatechange event
+                    evt.detail.xhr.readyState = 4;
+                    evt.detail.xhr.status = 200;
+                    evt.detail.xhr.statusText = 'OK';
+                    evt.detail.xhr.dispatchEvent(new Event('readystatechange'));
                     return htmlContent;
                 } catch (error) {
-                    console.error('Routing error:', error);
                     evt.detail.xhr.responseText = '<div>Error loading content</div>';
                     evt.detail.xhr.readyState = 4;
                     evt.detail.xhr.status = 404;

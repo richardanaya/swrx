@@ -12,10 +12,6 @@
   </style>
 </head>
 <body>
-  <!--
-    A button with an HTMX attribute that would normally send an HTTP GET request.
-    In this example, when clicked, the interceptor will catch and cancel this request.
-  -->
   <button 
     hx-get="/dummy-endpoint" 
     hx-target="#result" 
@@ -27,22 +23,7 @@
   <div id="result">Result will appear here.</div>
 
   <script>
-    /**
-     * Asynchronous interceptor function.
-     * This function receives the event details from HTMX, performs asynchronous operations,
-     * and returns an HTML string that will be injected into the target.
-     *
-     * @param {CustomEvent} event - The htmx event with request details.
-     * @returns {Promise<string>} - A promise that resolves with HTML content.
-     */
     async function interceptor(event) {
-      // Log the intercepted request details for debugging.
-      console.log("Interceptor: intercepted request details:", event.detail);
-      
-      // Simulate an asynchronous operation (e.g., a delay or pre-processing).
-
-      // Here you could also use fetch() or any other async operation if needed.
-      // For now, we return a static HTML snippet.
       return `
         <div style="background-color:#f9f9f9; padding:1rem; border-radius:4px;">
           <h3>Intercepted Response</h3>
@@ -51,9 +32,6 @@
       `;
     }
 
-    /**
-     * Listen for the htmx:beforeRequest event to intercept outgoing requests.
-     */
     document.body.addEventListener("htmx:beforeRequest", async (event) => {
       // Prevent the request from being sent to the server.
       event.preventDefault();
