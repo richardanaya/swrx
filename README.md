@@ -9,8 +9,9 @@ SWRX is a lightweight service worker router designed to handle HTTP requests in 
 - **URL Parameter Parsing**: Easily extract parameters from URLs using a simple syntax.
 - **HTML Response Generation**: Create HTML responses directly within the service worker.
 - **Service Worker Integration**: Leverage the power of service workers to intercept and handle network requests.
-- **Simple Key-Value Storage**: Provides a simple key-value storage similar to localStorage for persisting data.
+- **Simple Key-Value Storage**: Provides a simple key-value storage similar to localStorage for persisting data using IndexDB
 - **Fallback to normal HTTP**: Routes that aren't handled by the router, just pass through to normal server HTTP calls
+- **Helper functions for syntax highlighting** Comes with an `html` string function to easily produce HTML responses to fetches with syntax highlighting in most IDEs
 
 ## What are Service Workers?
 
@@ -93,10 +94,7 @@ post("/increment-counter", async (request) => {
   counter++;
   await serviceStorage.setItem("counter", counter);
 
-  return new Response(`Counter is now: ${counter}`, {
-    status: 200,
-    headers: { "Content-Type": "text/plain" },
-  });
+  return html`Counter is now: ${counter}`;
 });
 ```
 
