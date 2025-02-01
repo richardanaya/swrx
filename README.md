@@ -92,6 +92,47 @@ Here's an example of how you can use HTMX with SWRX to handle form submissions:
 
 In this example, the form uses `hx-post` to send a POST request to the server when submitted. The response is then injected into the `#response` element using `hx-target` and `hx-swap`.
 
+### Service Worker Handler Example
+
+Here's how you can define a service worker handler for the above HTMX form submission using SWRX:
+
+```javascript
+post("/user/[username]", async (request) => {
+  const { username } = request.params;
+  const formData = await request.formData();
+  const name = formData.get("name");
+  const email = formData.get("email");
+
+  if (!name || !email) {
+    return html`
+      <html>
+        <head>
+          <title>Error</title>
+        </head>
+        <body>
+          <h1>Error</h1>
+          <p>Missing form fields. Both "name" and "email" are required.</p>
+        </body>
+      </html>
+    `;
+  }
+
+  return html`
+    <html>
+      <head>
+        <title>Form Submitted</title>
+      </head>
+      <body>
+        <h1>Form Submitted Successfully!</h1>
+        <p>Username: ${username}</p>
+        <p>Name: ${name}</p>
+        <p>Email: ${email}</p>
+      </body>
+    </html>
+  `;
+});
+```
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
