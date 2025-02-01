@@ -3,10 +3,12 @@ htmx.defineExtension('requestInterceptor', {
         if (name === "htmx:configRequest") {
             var detail = evt.detail;
             // Intercept the request
-            if (detail.path === "/dummy-endpoint") {
-                // Emulate a response
+            if (detail.path === "/dummy-endpoint" || detail.path === "/submit") {
+                // Emulate a response for both GET and POST requests
                 setTimeout(function() {
-                    var response = "<div>Emulated Response Content</div>";
+                    var response = detail.path === "/dummy-endpoint" 
+                        ? "<div>Emulated Response Content</div>" 
+                        : "<div>Form submitted successfully!</div>";
                     htmx.trigger(detail.target, "htmx:beforeSwap", { serverResponse: response });
                     htmx.trigger(detail.target, "htmx:afterSwap", { serverResponse: response });
                 }, 1000); // Simulate network delay
