@@ -11,7 +11,3 @@ htmx.defineExtension('interceptor', {
         }
     }
 });
-
-htmx.onLoad(function () {
-    htmx.addExtension('interceptor');
-});
