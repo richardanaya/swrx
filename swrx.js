@@ -93,15 +93,61 @@ if (
   self.options = options;
   self.head = head;
 
-  function html(strings, ...values) {
-    let errorHtml = strings[0];
-    for (let i = 0; i < values.length; i++) {
-      errorHtml += String(values[i]) + strings[i + 1];
+  class ResponseBuilder {
+    constructor() {
+      this.status = 200;
+      this.headers = new Headers();
+      this.body = null;
     }
-    return new Response(errorHtml, {
-      status: 200,
-      headers: { "Content-Type": "text/html" },
-    });
+
+    /**
+     * Sets the HTTP status code.
+     * @param {number} status - The HTTP status code.
+     * @returns {ResponseBuilder} The builder instance for chaining.
+     */
+    setStatus(status) {
+      this.status = status;
+      return this;
+    }
+
+    /**
+     * Sets a header on the response.
+     * @param {string} name - The header name.
+     * @param {string} value - The header value.
+     * @returns {ResponseBuilder} The builder instance for chaining.
+     */
+    setHeader(name, value) {
+      this.headers.set(name, value);
+      return this;
+    }
+
+    /**
+     * Sets the body of the response.
+     * @param {BodyInit} body - The response body.
+     * @returns {ResponseBuilder} The builder instance for chaining.
+     */
+    setBody(body) {
+      this.body = body;
+      return this;
+    }
+
+    /**
+     * Builds and returns a new Response object.
+     * @returns {Response} The constructed Response object.
+     */
+    buildResponse() {
+      return new Response(this.body, {
+        status: this.status,
+        headers: this.headers,
+      });
+    }
+  }
+
+  function html(strings, ...values) {
+    const r = new ResponseBuilder();
+    r.setHeader("Content-Type", "text/html");
+    r.setBody(new Blob([strings], { type: "text/html" }));
+    return r;
   }
 
   self.html = html;
