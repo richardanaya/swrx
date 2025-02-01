@@ -1,5 +1,5 @@
 # SWRX 
-**A library for frontend SPAs using HTMX for a more civilized age**
+**A library for frontend SPAs using HTMX for a more civilized age using Service Workers**
 
 SWRX is a lightweight service worker router designed to handle HTTP requests in a service worker context using an Express-like syntax. It is designed to be paired with HTMX to enhance the interactivity of web applications, but it can also be used independently. SWRX allows developers to define routes and handle requests directly within the service worker, providing a seamless way to manage offline capabilities and enhance web application performance.
 
@@ -10,6 +10,7 @@ SWRX is a lightweight service worker router designed to handle HTTP requests in 
 - **HTML Response Generation**: Create HTML responses directly within the service worker.
 - **Service Worker Integration**: Leverage the power of service workers to intercept and handle network requests.
 - **Simple Key-Value Storage**: Provides a simple key-value storage similar to localStorage for persisting data.
+- **Fallback to normal HTTP**: Routes that aren't handled by the router, just pass through to normal server HTTP calls
 
 ## What are Service Workers?
 
@@ -126,8 +127,8 @@ In this example, the form uses `hx-post` to send a POST request to the server wh
 Here's how you can define a service worker handler for the above HTMX form submission using SWRX:
 
 ```javascript
-post("/user/[username]", async (request) => {
-  const { username } = request.params;
+post("/user/[userId]", async (request) => {
+  const { userId } = request.params;
   const formData = await request.formData();
   const name = formData.get("name");
   const email = formData.get("email");
@@ -153,7 +154,7 @@ post("/user/[username]", async (request) => {
       </head>
       <body>
         <h1>Form Submitted Successfully!</h1>
-        <p>Username: ${username}</p>
+        <p>Username: ${userId}</p>
         <p>Name: ${name}</p>
         <p>Email: ${email}</p>
       </body>
