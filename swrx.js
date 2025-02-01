@@ -143,10 +143,10 @@ if (
     }
   }
 
-  function html(strings, ...values) {
+  function html(strings) {
     const r = new ResponseBuilder();
     r.setHeader("Content-Type", "text/html");
-    r.setBody(new Blob([strings], { type: "text/html" }));
+    r.setBody(strings);
     return r;
   }
 

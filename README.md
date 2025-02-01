@@ -89,7 +89,7 @@ post("/submit/[id]/[otherid]/*", async (request) => {
           <p>Missing form fields. Both "name" and "email" are required.</p>
         </body>
       </html>
-    `;
+    `.setStatus(400).buildResponse();
   }
 
   return html`
@@ -106,7 +106,7 @@ post("/submit/[id]/[otherid]/*", async (request) => {
         <p>Email: ${email}</p>
       </body>
     </html>
-  `;
+  `.buildResponse();
 });
 ```
 
@@ -124,7 +124,7 @@ post("/increment-counter", async (request) => {
   counter++;
   await serviceStorage.setItem("counter", counter);
 
-  return html`Counter is now: ${counter}`;
+  return html`Counter is now: ${counter}`.buildResponse();
 });
 ```
 
@@ -172,7 +172,7 @@ post("/user/[userId]", async (request) => {
           <p>Missing form fields. Both "name" and "email" are required.</p>
         </body>
       </html>
-    `;
+    `setStatus(400).buildResponse();
   }
 
   return html`
@@ -187,7 +187,7 @@ post("/user/[userId]", async (request) => {
         <p>Email: ${email}</p>
       </body>
     </html>
-  `;
+  `.buildResponse();
 });
 ```
 
