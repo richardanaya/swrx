@@ -55,7 +55,7 @@ frontendServer.get('/contact', () => '<div>Contact Page Content</div>');
 // Example of adding a POST route
 frontendServer.register('POST', '/submit', (data) => {
     const name = data.name || 'Unknown';
-    return `<div>Form Submitted. Hello, ${name}!</div>`;
+    return `<div>Hello, ${name}!</div>`;
 });
 
 htmx.defineExtension('interceptor', {
