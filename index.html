@@ -1,35 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>HTMX 2.0 Async Interceptor Example</title>
-  <!-- Include HTMX 2.0 from a CDN -->
-  <script src="https://unpkg.com/htmx.org@2.0.0"></script>
-  <style>
-    /* Basic styling for demonstration */
-    body { font-family: Arial, sans-serif; margin: 2rem; }
-    #result { margin-top: 1rem; padding: 1rem; border: 1px solid #ccc; }
-  </style>
-</head>
-<body>
-  <button 
-    hx-get="/dummy-endpoint" 
-    hx-target="#result" 
-    hx-trigger="click">
-    Fetch Data
-  </button>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Htmx Service Worker Router</title>
+    <!-- Include HTMX 2.0 from a CDN -->
+    <script src="https://unpkg.com/htmx.org@2.0.0/dist/htmx.js"></script>
+    <script src="./swrx.js"></script>
+    <style>
+      /* Basic styling for demonstration */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 2rem;
+      }
+      #result {
+        margin-top: 1rem;
+        padding: 1rem;
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Submit Your Information</h1>
+    <form
+      hx-post="/submit/1 23/abc/abrac adabra"
+      hx-target="#response"
+      hx-swap="innerHTML"
+    >
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" required />
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required />
+      </div>
+      <button type="submit">Submit</button>
+    </form>
 
-  <!-- The target element where the HTML response will be injected -->
-  <div id="result">Result will appear here.</div>
-  <div id="form-result">Form result will appear here.</div>
-
-  <form id="myForm" hx-post="/submit" hx-target="#myForm" hx-swap="innerHTML">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required>
-    <button type="submit">Submit</button>
-  </form>
-
-  <script src="interceptor.js"></script>
-
-</body>
+    <!-- The response from the server will be injected into this element -->
+    <div id="response" style="margin-top: 20px"></div>
+    <script>
+      loadHtmxRouter("/sw.js");
+    </script>
+  </body>
 </html>
