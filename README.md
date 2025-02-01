@@ -106,8 +106,8 @@ In this example, the form uses `hx-post` to send a POST request to the server wh
 Here's how you can define a service worker handler for the above HTMX form submission using SWRX:
 
 ```javascript
-post("/user/[username]", async (request) => {
-  const { username } = request.params;
+post("/user/[userId]", async (request) => {
+  const { userId } = request.params;
   const formData = await request.formData();
   const name = formData.get("name");
   const email = formData.get("email");
@@ -133,7 +133,7 @@ post("/user/[username]", async (request) => {
       </head>
       <body>
         <h1>Form Submitted Successfully!</h1>
-        <p>Username: ${username}</p>
+        <p>Username: ${userId}</p>
         <p>Name: ${name}</p>
         <p>Email: ${email}</p>
       </body>
