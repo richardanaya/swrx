@@ -67,6 +67,32 @@ post("/submit/[id]/[otherid]/*", async (request) => {
 });
 ```
 
+## HTMX Integration
+
+SWRX can be seamlessly integrated with HTMX to enhance the interactivity of your web applications. HTMX allows you to use HTML attributes to perform AJAX requests, update parts of the page, and handle user interactions without writing JavaScript.
+
+### HTMX Example
+
+Here's an example of how you can use HTMX with SWRX to handle form submissions:
+
+```html
+<form hx-post="/submit/[id]/[otherid]/*" hx-target="#response" hx-swap="innerHTML">
+  <div>
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="name" required />
+  </div>
+  <div>
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email" required />
+  </div>
+  <button type="submit">Submit</button>
+</form>
+
+<div id="response" style="margin-top: 20px"></div>
+```
+
+In this example, the form uses `hx-post` to send a POST request to the server when submitted. The response is then injected into the `#response` element using `hx-target` and `hx-swap`.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
