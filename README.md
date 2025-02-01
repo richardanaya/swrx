@@ -9,6 +9,7 @@ SWRX is a lightweight service worker router designed to handle HTTP requests in 
 - **URL Parameter Parsing**: Easily extract parameters from URLs using a simple syntax.
 - **HTML Response Generation**: Create HTML responses directly within the service worker.
 - **Service Worker Integration**: Leverage the power of service workers to intercept and handle network requests.
+- **Fallback to normal HTTP**: Routes that aren't handled by the router, just pass through to normal server HTTP calls
 
 ## What are Service Workers?
 
