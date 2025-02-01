@@ -30,16 +30,46 @@ To use SWRX, include the `swrx.js` script in your service worker file and define
 
 Here's a simple example demonstrating how to define routes using SWRX:
 
-```javascript
-import "./swrx.js";
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Htmx Service Worker Router</title>
+    <!-- Include HTMX 2.0 from a CDN -->
+    <script src="https://unpkg.com/htmx.org@2.0.0/dist/htmx.js"></script>
+    <script src="https://unpkg.com/@richardanaya/swrx/swrx.js"></script>
+  </head>
+  <body>
+   <h1>Submit Your Information</h1>
+    <form
+      hx-post="/submit/123/abc/wildcard info can go here"
+      hx-target="#response"
+      hx-swap="innerHTML"
+    >
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" required />
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required />
+      </div>
+      <button type="submit">Submit</button>
+    </form>
 
-// Define a GET route
-get("/pages/index", (request) => {
-  return new Response("Hello world!", {
-    status: 200,
-    headers: { "Content-Type": "text/plain" },
-  });
-});
+    <!-- The response from the server will be injected into this element -->
+    <div id="response" style="margin-top: 20px"></div>
+    <script>
+      loadHtmxRouter("/sw.js");
+    </script>
+  </body>
+</html>
+```
+
+
+```javascript
+import "https://unpkg.com/@richardanaya/swrx/swrx.js";
 
 // Define a POST route with URL parameters
 post("/submit/[id]/[otherid]/*", async (request) => {
