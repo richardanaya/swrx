@@ -10,6 +10,15 @@ SWRX is a lightweight service worker router designed to handle HTTP requests in 
 - **HTML Response Generation**: Create HTML responses directly within the service worker.
 - **Service Worker Integration**: Leverage the power of service workers to intercept and handle network requests.
 
+## What are Service Workers?
+
+Service workers are scripts that run in the background of your web application, separate from the main browser thread. They enable features such as offline support, background sync, and push notifications. SWRX leverages service workers to intercept and handle network requests, providing a seamless way to manage offline capabilities and enhance web application performance.
+
+When using SWRX, you can specify how to handle the situation when a new service worker is detected by the browser. You have three options:
+1. **Do nothing**: The new service worker will start handling requests as soon as it's loaded.
+2. **Reload the screen**: Automatically refresh the page to ensure the latest service worker is in control.
+3. **Redirect the location**: Redirect the user to a different page, such as the index, when a new service worker is activated.
+
 ## Getting Started
 
 To use SWRX, include the `swrx.js` script in your service worker file and define your routes using the provided helper functions.
