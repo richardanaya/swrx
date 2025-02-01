@@ -144,9 +144,14 @@ if (
   }
 
   function html(strings) {
+    let builtHtml = strings[0];
+    for (let i = 0; i < values.length; i++) {
+      builtHtml += String(values[i]) + strings[i + 1];
+    }
+
     const r = new ResponseBuilder();
     r.setHeader("Content-Type", "text/html");
-    r.setBody(strings);
+    r.setBody(builtHtml);
     return r;
   }
 
