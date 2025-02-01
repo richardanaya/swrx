@@ -1,5 +1,6 @@
 {
     "name": "@richardanaya/swrx",
     "version": "0.0.4",
-    "license": "MIT"
+    "license": "MIT",
+    "private": false
 }
