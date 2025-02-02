@@ -47,7 +47,7 @@ Here's a simple example demonstrating how to define routes using SWRX:
     <title>Htmx Service Worker Router</title>
     <!-- Include HTMX 2.0 from a CDN -->
     <script src="https://unpkg.com/htmx.org@2.0.0/dist/htmx.js"></script>
-    <script src="https://unpkg.com/@richardanaya/swrx@0.0.10/swrx.js"></script>
+    <script src="https://unpkg.com/@richardanaya/swrx@0.0.12/swrx.js"></script>
   </head>
   <body>
    <h1>Submit Your Information</h1>

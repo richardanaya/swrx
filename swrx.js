@@ -10,24 +10,6 @@ if (
     event.waitUntil(self.clients.claim());
   });
 
-  self.addEventListener("sync", (event) => {
-    event.waitUntil(
-      self.clients
-        .matchAll({ includeUncontrolled: true, type: "window" })
-        .then((clients) => {
-          for (const client of clients) {
-            // Post a message to each client
-            client.postMessage({
-              type: "service-worker-activate",
-            });
-          }
-        })
-        .catch((error) => {
-          console.error("Error sending message to clients:", error);
-        })
-    );
-  });
-
   // -------------------- Minimal Express-like Router with URL Params --------------------
 
   // Array to store route definitions.
@@ -281,21 +263,12 @@ if (
 } else {
   window.loadHtmxRouter = function loadHtmxRouter(
     file,
-    { refreshOnUpdatedServiceWorker, type, onActivated } = {
+    { refreshOnUpdatedServiceWorker, type } = {
       refreshOnUpdatedServiceWorker: false,
       type: "module",
     }
   ) {
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.addEventListener("message", (event) => {
-        const { type, message } = event.data;
-        if (type === "service-worker-activated") {
-          if (onActivated) {
-            onActivated();
-          }
-        }
-      });
-
       navigator.serviceWorker.register(file, { type }).then((registration) => {
         // Listen for the updatefound event on the registration.
         registration.addEventListener("updatefound", () => {
