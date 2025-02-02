@@ -93,7 +93,7 @@ if (
   self.options = options;
   self.head = head;
 
-  class ResponseBuilder {
+  class Component {
     constructor() {
       this.status = 200;
       this.headers = new Headers();
@@ -103,7 +103,7 @@ if (
     /**
      * Sets the HTTP status code.
      * @param {number} status - The HTTP status code.
-     * @returns {ResponseBuilder} The builder instance for chaining.
+     * @returns {Component} The builder instance for chaining.
      */
     setStatus(status) {
       this.status = status;
@@ -114,7 +114,7 @@ if (
      * Sets a header on the response.
      * @param {string} name - The header name.
      * @param {string} value - The header value.
-     * @returns {ResponseBuilder} The builder instance for chaining.
+     * @returns {Component} The builder instance for chaining.
      */
     setHeader(name, value) {
       this.headers.set(name, value);
@@ -124,7 +124,7 @@ if (
     /**
      * Sets the body of the response.
      * @param {BodyInit} body - The response body.
-     * @returns {ResponseBuilder} The builder instance for chaining.
+     * @returns {Component} The builder instance for chaining.
      */
     setBody(body) {
       this.body = body;
@@ -153,7 +153,7 @@ if (
       builtHtml += String(values[i]) + strings[i + 1];
     }
 
-    const r = new ResponseBuilder();
+    const r = new Component();
     r.setHeader("Content-Type", "text/html");
     r.setBody(builtHtml);
     return r;
