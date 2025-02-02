@@ -131,6 +131,10 @@ if (
       return this;
     }
 
+    toString() {
+      return this.body;
+    }
+
     /**
      * Builds and returns a new Response object.
      * @returns {Response} The constructed Response object.
