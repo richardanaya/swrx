@@ -1,7 +1,16 @@
-# SWRX 
+
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/1834ae44-2f86-4488-a706-b54cd40b942c" width="300"/>
+</p>
+
+
+# SWRX
 **A library for frontend SPAs using HTMX for a more civilized age using Service Workers**
 
 SWRX is a lightweight service worker router designed to handle HTTP requests in a service worker context using an Express-like syntax. It is designed to be paired with HTMX to enhance the interactivity of web applications, but it can also be used independently. SWRX allows developers to define routes and handle requests directly within the service worker, providing a seamless way to manage offline capabilities and enhance web application performance.
+
+[Minimal quick start using HTMX + SWRX + Tailwind + Typescript](https://github.com/richardanaya/htmx-swrx-tailwind-typescript)
 
 ## Features
 
