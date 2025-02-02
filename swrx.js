@@ -284,7 +284,6 @@ if (
     { refreshOnUpdatedServiceWorker, type, onActivated } = {
       refreshOnUpdatedServiceWorker: false,
       type: "module",
-      onActivated,
     }
   ) {
     if ("serviceWorker" in navigator) {
