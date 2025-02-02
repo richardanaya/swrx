@@ -261,47 +261,25 @@ if (
     }
   });
 } else {
-  window.loadHtmxRouter = function loadHtmxRouter(
-    file,
-    { refreshOnUpdatedServiceWorker, type } = {
-      refreshOnUpdatedServiceWorker: false,
-      type: "module",
-    }
-  ) {
+  window.loadHtmxRouter = function loadHtmxRouter(file) {
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register(file, { type }).then((registration) => {
-        // Listen for the updatefound event on the registration.
-        registration.addEventListener("updatefound", () => {
-          const newWorker = registration.installing;
-          newWorker.addEventListener("statechange", () => {
-            // When the new service worker has been installed but is waiting to activate:
-            if (
-              newWorker.state === "installed" &&
-              navigator.serviceWorker.controller
-            ) {
-              console.log("SWRX: New service worker installed and waiting.");
-            }
+      navigator.serviceWorker
+        .register(file, { type: "module" })
+        .then((registration) => {
+          // Listen for the updatefound event on the registration.
+          registration.addEventListener("updatefound", () => {
+            const newWorker = registration.installing;
+            newWorker.addEventListener("statechange", () => {
+              // When the new service worker has been installed but is waiting to activate:
+              if (
+                newWorker.state === "installed" &&
+                navigator.serviceWorker.controller
+              ) {
+                console.log("SWRX: New service worker installed and waiting.");
+              }
+            });
           });
         });
-
-        // Optionally, listen for controller changes, which indicates that the new SW has taken control.
-        navigator.serviceWorker.addEventListener("controllerchange", () => {
-          console.log("SWRX: Service worker controller changed.");
-          // For example, you could automatically refresh the page:
-          if (refreshOnUpdatedServiceWorker) {
-            if (
-              typeof refreshOnUpdatedServiceWorker === "boolean" &&
-              refreshOnUpdatedServiceWorker
-            ) {
-              console.log("SWRX: Reloading page.");
-              window.location.reload();
-            } else if (typeof refreshOnUpdatedServiceWorker === "string") {
-              console.log("SWRX: Redirecting page.");
-              window.location.href = refreshOnUpdatedServiceWorker;
-            }
-          }
-        });
-      });
     }
   };
 }

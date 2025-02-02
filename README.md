@@ -10,8 +10,6 @@
 
 SWRX is a lightweight service worker router designed to handle HTTP requests in a service worker context using an Express-like syntax. It is designed to be paired with HTMX to enhance the interactivity of web applications, but it can also be used independently. SWRX allows developers to define routes and handle requests directly within the service worker, providing a seamless way to manage offline capabilities and enhance web application performance.
 
-[Minimal quick start using HTMX + SWRX + Tailwind + Typescript](https://github.com/richardanaya/htmx-swrx-tailwind-typescript)
-
 ## Features
 
 - **Express-like Routing**: Define routes using familiar HTTP methods such as GET, POST, PUT, DELETE, etc.
@@ -20,20 +18,18 @@ SWRX is a lightweight service worker router designed to handle HTTP requests in 
 - **Service Worker Integration**: Leverage the power of service workers to intercept and handle network requests.
 - **Simple Key-Value Storage**: Provides a simple key-value storage similar to localStorage for persisting data using IndexDB
 - **Fallback to normal HTTP**: Routes that aren't handled by the router, just pass through to normal server HTTP calls
-- **Helper functions for syntax highlighting** Comes with an `html` string function to easily produce HTML responses to fetches with syntax highlighting in most IDEs
 
 ## What are Service Workers?
 
 Service workers are scripts that run in the background of your web application, separate from the main browser thread. They enable features such as offline support, background sync, and push notifications. SWRX leverages service workers to intercept and handle network requests, providing a seamless way to manage offline capabilities and enhance web application performance.
 
-When using SWRX, you can specify how to handle the situation when a new service worker is detected by the browser. You have three options:
-1. **Do nothing**: The new service worker will start handling requests as soon as it's loaded.
-2. **Reload the screen**: Automatically refresh the page to ensure the latest service worker is in control.
-3. **Redirect the location**: Redirect the user to a different page, such as the index, when a new service worker is activated.
-
 ## Getting Started
 
 To use SWRX, include the `swrx.js` script in your service worker file and define your routes using the provided helper functions.
+
+[Minimal quick start using HTMX + SWRX + Tailwind + Typescript](https://github.com/richardanaya/htmx-swrx-tailwind-typescript)
+
+If you're unfamiliar with how service workers load and get updated, you might want to look at the index.html file in this project :point-up:
 
 ### Example
 
@@ -47,7 +43,7 @@ Here's a simple example demonstrating how to define routes using SWRX:
     <title>Htmx Service Worker Router</title>
     <!-- Include HTMX 2.0 from a CDN -->
     <script src="https://unpkg.com/htmx.org@2.0.0/dist/htmx.js"></script>
-    <script src="https://unpkg.com/@richardanaya/swrx@0.0.12/swrx.js"></script>
+    <script src="https://unpkg.com/@richardanaya/swrx@0.0.13/swrx.js"></script>
   </head>
   <body>
    <h1>Submit Your Information</h1>
@@ -78,7 +74,7 @@ Here's a simple example demonstrating how to define routes using SWRX:
 
 
 ```javascript
-import "https://unpkg.com/@richardanaya/swrx@0.0.8/swrx.js";
+import "https://unpkg.com/@richardanaya/swrx@0.0.13/swrx.js";
 
 // Define a POST route with URL parameters
 post("/submit/[id]/[otherid]/*", async (request) => {
@@ -155,49 +151,6 @@ Here's an example of how you can use HTMX with SWRX to handle form submissions:
   </div>
   <button type="submit">Submit</button>
 </form>
-```
-
-In this example, the form uses `hx-post` to send a POST request to the server when submitted. The response is then injected into the `#response` element using `hx-target` and `hx-swap`.
-
-### Service Worker Handler Example
-
-Here's how you can define a service worker handler for the above HTMX form submission using SWRX:
-
-```javascript
-post("/user/[userId]", async (request) => {
-  const { userId } = request.params;
-  const formData = await request.formData();
-  const name = formData.get("name");
-  const email = formData.get("email");
-
-  if (!name || !email) {
-    return html`
-      <html>
-        <head>
-          <title>Error</title>
-        </head>
-        <body>
-          <h1>Error</h1>
-          <p>Missing form fields. Both "name" and "email" are required.</p>
-        </body>
-      </html>
-    `setStatus(400).buildResponse();
-  }
-
-  return html`
-    <html>
-      <head>
-        <title>Form Submitted</title>
-      </head>
-      <body>
-        <h1>Form Submitted Successfully!</h1>
-        <p>Username: ${userId}</p>
-        <p>Name: ${name}</p>
-        <p>Email: ${email}</p>
-      </body>
-    </html>
-  `.buildResponse();
-});
 ```
 
 ## License
