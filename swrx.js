@@ -281,17 +281,19 @@ if (
 } else {
   window.loadHtmxRouter = function loadHtmxRouter(
     file,
-    { refreshOnUpdatedServiceWorker, type } = {
+    { refreshOnUpdatedServiceWorker, type, onActivated } = {
       refreshOnUpdatedServiceWorker: false,
       type: "module",
-    },
-    onActivated
+      onActivated,
+    }
   ) {
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.addEventListener("message", (event) => {
         const { type, message } = event.data;
         if (type === "service-worker-activated") {
-          onActivated();
+          if (onActivated) {
+            onActivated();
+          }
         }
       });
 
